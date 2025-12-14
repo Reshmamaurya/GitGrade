@@ -6,8 +6,8 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv  # For loading .env file
 
-# ================= LOAD .ENV =================
-load_dotenv()  # Load environment variables from .env
+
+load_dotenv()  
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 PPLX_API_KEY = os.getenv("PPLX_API_KEY")
