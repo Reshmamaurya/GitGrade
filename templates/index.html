@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitGrade - Repo Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-10">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-4xl font-extrabold mb-2 text-blue-500">GitGrade</h1>
+        <p class="text-gray-400 mb-8">Get your Score, Summary, and Personalized Roadmap.</p>
+        
+        <div class="flex gap-2 mb-10">
+            <input id="repoUrl" type="text" placeholder="https://github.com/user/repo" 
+                   class="flex-1 p-4 rounded bg-gray-800 border border-gray-700 focus:border-blue-500 outline-none">
+            <button onclick="analyzeRepo()" id="btn" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded font-bold transition">Analyze</button>
+        </div>
+
+        <div id="loader" class="hidden text-center mb-10">Analyzing Repository... Please wait.</div>
+
+        <div id="result" class="hidden bg-gray-800 p-8 rounded-xl border-t-4 border-blue-500 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold">Analysis Results</h2>
+                <div class="text-4xl font-black text-blue-400" id="score">0</div>
+            </div>
+            <p class="text-gray-300 italic mb-6 border-l-4 border-gray-600 pl-4" id="summary"></p>
+            <h3 class="font-bold text-blue-500 uppercase tracking-widest text-xs mb-3">Personalized Roadmap</h3>
+            <ul id="roadmap" class="space-y-2 text-sm text-gray-400"></ul>
+        </div>
+    </div>
+
+    <script>
+        async function analyzeRepo() {
+            const btn = document.getElementById('btn');
+            const loader = document.getElementById('loader');
+            const resultDiv = document.getElementById('result');
+            const url = document.getElementById('repoUrl').value;
+
+            // Loading state
+            btn.disabled = true;
+            loader.classList.remove('hidden');
+            resultDiv.classList.add('hidden');
+
+            try {
+                const res = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({url})
+                });
+                
+                const data = await res.json();
+                
+                document.getElementById('score').innerText = data.score;
+                document.getElementById('summary').innerText = data.summary;
+                
+                const list = document.getElementById('roadmap');
+                list.innerHTML = "";
+                data.roadmap.forEach(step => {
+                    const li = document.createElement('li');
+                    li.className = "bg-gray-700 p-3 rounded";
+                    li.innerText = "👉 " + step;
+                    list.appendChild(li);
+                });
+
+                resultDiv.classList.remove('hidden');
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                btn.disabled = false;
+                loader.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
