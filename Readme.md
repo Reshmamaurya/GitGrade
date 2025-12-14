@@ -27,7 +27,7 @@ GitGrade is a FastAPI-based web service that analyzes GitHub repositories. It fe
 - Perplexity AI API
 
 ---
-
+```
 ## Project Structure
 
 GITGRADE/
@@ -38,7 +38,7 @@ GITGRADE/
 ├─ README.md
 └─ .env # Local only, never commit
 ---
-
+```
 ## Installation (Local Development)
 
 1. Clone the repository:
