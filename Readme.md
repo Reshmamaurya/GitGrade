@@ -32,11 +32,8 @@ GitGrade is a FastAPI-based web service that analyzes GitHub repositories. It fe
 
 GITGRADE/
 ├─ analyze.py 
-|
 ├─ templates/
 │ └─ index.html # Home page template
-├
-|
 ├─ .gitignore # Excludes .env and temporary files
 ├─ README.md
 └─ .env # Local only, never commit
