@@ -1,0 +1,5 @@
+fastapi
+requests
+python-dotenv
+jinja2
+mangum

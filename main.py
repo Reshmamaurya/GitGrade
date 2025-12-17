@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv  # For loading .env file
+from mangum import Mangum
 
 
 load_dotenv()  
@@ -196,3 +197,7 @@ Return:
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+
+handler = Mangum(app)
